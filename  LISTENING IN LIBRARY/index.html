@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LISTENING IN LIBRARY</title>
+  <meta name="description" content="LISTENING IN LIBRARY" />
+  <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-ambisonic-component"></script>
+  <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/aframe-play-sound-on-event@1.0.2/dist/aframe-play-sound-on-event.min.js"></script> <!--  Sound Play or stop-->
+ <!-- <script src="https://aframe.io/releases/0.3.0/aframe-inspector.min.js"></script> -->
+</head>
+<body>
+  <a-scene>
+    <!-- Asset Management System --> 
+    <a-assets>
+      <img id="floor" src="assets/TCLlib/TCL_floor.jpg" crossorigin="anonymous">
+      <img id="floor2" src="assets/floor2.JPG" crossorigin="anonymous">
+      <img id="roof" src="assets/TCLlib/TCL_roof.JPG" crossorigin="anonymous">
+      <img id="wall" src="assets/TCLlib/bookshelf.jpg" crossorigin="anonymous">
+      <img id="wall2" src="assets/bookwall2.jpg" crossorigin="anonymous">
+      <img id="wall3" src="assets/test.JPG" crossorigin="anonymous">
+      <img id="wall4" src="assets/TCLlib/TCL_wall.JPG" crossorigin="anonymous">
+      <img id="window" src="assets/TCLlib/TCL_window.JPG" crossorigin="anonymous">
+      <img id="libchannel1" src="assets/TCLlib/TCL_channel.jpg" crossorigin="anonymous">
+      <img id="libchannel2" src="assets/Britschlib-channel.jpg" crossorigin="anonymous">
+      <img id="audiobook" src="assets/Audiobook1.png" crossorigin="anonymous">
+      <img id="booktexture" src="assets/booktexture1.jpg" crossorigin="anonymous">
+      <img id="texture" src="assets/TCLlib/lib_taiwan_assets.png" crossorigin="anonymous">
+      <img id="logo" src="assets/icon.png" crossorigin="anonymous">
+      <audio id="libsound" src="assets/Library SoundScape.mp3"></audio>
+      <audio id="story1" src="assets/story1.wav"></audio> <!-- 待修 -->
+      <audio id="story2" src="assets/warofworlds_b1_ch01.mp3"></audio> 
+      <audio id="story3" src="assets/warofworlds_b1_ch02.mp3"></audio>
+      <a-asset-item id="cityModel" 
+      src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf">
+      </a-asset-item>
+
+    </a-assets>
+    
+    <!--  Architecture. -->
+    <a-entity id="architecture" class="homeworld">
+      <a-plane position="0 5 -15" width="30" height="30" src="#wall4" repeat="3 2"></a-plane>
+      <a-plane position="0 5 15" rotation="0 180 0" width="30" height="30" src="#wall4" repeat="3 2"></a-plane>
+      <a-plane position="-15 5 0" rotation="0 90 0" width="30" height="30" src="#wall4" repeat="3 2"></a-plane>
+      <a-plane position="15 5 0" rotation="0 -90 0" width="30" height="30" src="#wall4" repeat="3 2"></a-plane>
+    </a-entity>
+
+    <!-- Light. -->
+    <a-entity light="type: ambient; color: #FFFDD0; intensity:1.2" position="1 5 1"></a-entity>
+
+    <!--  Camera. -->
+    <a-entity position="0 0 7" >
+      <a-camera>
+        <a-cursor></a-cursor>
+        </a-camera>
+    </a-entity>     
+      
+    <!--  Ground -->
+    <a-plane src="#floor" scale="40 40 1" repeat="16 16" rotation="-90 0 0" position="0 0.5 0">
+    </a-plane>
+
+    <!--  BackGround -->
+    <a-sky id="TCLroof" src="#roof" repeat="8 8" >
+    </a-sky>
+
+    <!--  Soundscape -->
+    <a-entity id="libsound" 
+      sound="src: #libsound; autoplay: true; loop: true; volume: 2;" 
+      position="0 0 0"></a-entity>
+    <a-ambisonic-audio src="#libsound"></a-ambisonic-audio>
+
+    <!--  Introduction Text Version-->
+    <a-entity 
+      geometry="primitive: plane; width: 4; height: 4.5" 
+      material="color:#000000"
+      position="-1.5 3.5 -4"
+      text="font: https://cdn.aframe.io/fonts/mozillavr.fnt;
+            width: 4; color: #ffffff; letterSpacing: 4; align:center; lineHeight: 110px; font-size: 100px;
+            value: Welcome to the LISTENING IN LIBRARY ! \n\n Miss the sounds in the library?
+            Start your audio library experience \n and pick one audiobook with you.\n
+            I wish you enjoy the \n virtual library sound experience.:)\n\n\n\n Btw, welcome to submit your local 
+            library's sound and audiobook to me. Your submission will be processed into the virtual library. -> \n \n\n SHANGYUNWU ">
+    </a-entity>
+     
+    <!--  Introduction GUI Version-->
+    <a-gui-flex-container 
+      flex-direction="column" 
+      justify-content="center" 
+      align-items="normal" 
+      component-padding="0.1" 
+      opacity="0.8" 
+      width="4.5" 
+      height="4.5" 
+      position="3 3.5 -4" 
+      rotation="0 0 0"
+      panel-color="#ffffff">
+
+    <!--  Introduction gui
+    <a-gui-label 
+      width="2.5" 
+      height="3.75" 
+      value="Welcome to 《LISTENING》 Library project!"
+      font-size="65px"
+      font-family="Arial"
+      font-color="#ffffff"
+      margin="0 0 0.05 0"
+      background-color="#000000">
+    </a-gui-label> -->
+    <!--  Submit gui -->
+    
+    <a-gui-button 
+      width="2.5" 
+      height="0.75" 
+      onclick="buttonActionFunction"
+      key-code="32" 
+      value="Submit"
+      font-family="Arial" 
+      margin="0 0 0.05 0"
+      link=" href: shangyunabbie@gmail.com">
+    </a-gui-button>
+    </a-gui-flex-container>
+
+    <!--  Entance  -->
+    <a-link href="British Library.html" image="#libchannel2" 
+      title="This Way To British Library" position="6 2 0.5" color="#484D6D"></a-link>
+    <!--<a-box  src="#lib" repeat="1 1"></a-box> -->
+    
+    <!--  Book1 Cylinder -->
+    <a-cylinder  
+      height="2" 
+      position="-5 3 0" 
+      src="#audiobook"
+      repeat="2 2"
+      sound="src: #story1; volume: 1; refDistance: 4;  rolloffFacor: 1;"
+      play-sound-on-event="mode: toggle-stop; event: click">
+    </a-cylinder>
+          
+    <!--  Book2 Box -->
+    <a-box 
+      position="8 3 1.5" 
+      src="#texture"
+      repeat="1 1"
+      sound="src: #story1; volume: 1; refDistance: 4; rolloffFacor: 1;"
+      play-sound-on-event="mode: toggle-stop; event: click">
+    </a-box>
+
+    <!--  Book3  Dodecahedron-->
+    <a-entity
+      geometry="primitive: dodecahedron; radius: 1; "
+      material="src: #audiobook"
+      position="0 6 4" 
+      repeat="1 1"
+      sound="src: #story1; volume: 1; refDistance: 4; rolloffFacor: 1;"
+      play-sound-on-event="mode: toggle-stop; event: click">
+    </a-entity>
+
+    <!--  Book4 Model 
+    <a-entity gltf-model="#cityModel" modify-materials
+     sound="src: #story3; volume: 0.4; refDistance: 4; rolloffFacor: 1;"
+     play-sound-on-event="mode: toggle-stop; event: click">
+    </a-entity>-->
+  </a-scene>
+</body>
+</html>
